@@ -2,8 +2,8 @@
 
 namespace QueueAppStore.Domain.Adapters
 {
-    public interface IQueueAdapter
+    public interface IOrderRepository
     {
-        Task AddPaymentMessage(Payment payment);
+        Task<int> AddOrder(Order order);
     }
 }

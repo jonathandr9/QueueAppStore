@@ -9,9 +9,9 @@ namespace QueueAppStore.Controllers
     [Route("[controller]")]
     public class ClientController : Controller
     {
-        private readonly ILogger<PaymentController> _logger;
+        private readonly ILogger<OrderController> _logger;
 
-        public ClientController(ILogger<PaymentController> logger)
+        public ClientController(ILogger<OrderController> logger)
         {
             _logger = logger;
         }

@@ -27,6 +27,10 @@ namespace Microsoft.Extensions.DependencyInjection
                 IAppRepository,
                 AppRepository>();
 
+            services.AddScoped<
+                IOrderRepository,
+                OrderRepository>();
+
             services.AddSingleton(configuration);
 
             services.AddScoped

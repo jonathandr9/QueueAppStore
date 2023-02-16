@@ -1,4 +1,5 @@
 ﻿using QueueAppStore.Domain.Adapters;
+using QueueAppStore.Domain.Models;
 using RabbitMQ.Client;
 using System.Text;
 
@@ -11,7 +12,7 @@ namespace QueueAppStore.RabbitMQAdapter
 
         }
 
-        public async Task AddPaymentMessage()
+        public async Task AddPaymentMessage(Payment payment)
         {
             var factory = new ConnectionFactory { HostName = "localhost" };
             using var connection = factory.CreateConnection();

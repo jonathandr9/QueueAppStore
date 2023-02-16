@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IAppService, AppService>();
 builder.Services.AddScoped<IQueueAdapter, QueueAdapter>();
 builder.Services.AddSqlAdapter(
