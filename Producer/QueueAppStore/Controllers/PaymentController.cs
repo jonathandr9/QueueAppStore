@@ -21,7 +21,7 @@ namespace QueueAppStore.Controllers
         [HttpPost(Name = "PaymentWithCard")]
         public async Task PaymentWithCard(Card cardData)
         {
-            await _paymentService.PaymentWithCard();
+            await _paymentService.PaymentWithCard();  
         }
 
 

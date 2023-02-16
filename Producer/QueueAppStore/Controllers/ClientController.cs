@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using QueueAppStore.API.Models;
+using QueueAppStore.Domain.Models;
 
 namespace QueueAppStore.Controllers
 {
@@ -14,11 +16,20 @@ namespace QueueAppStore.Controllers
             _logger = logger;
         }
 
-        //[HttpPost(Name = "PaymentWithCard")]
-        //public async Task PaymentWithCard(Card cardData)
-        //{
+        [HttpPost("Login")]
+        public async Task<Client> Login(LoginPost login)
+        {
+            return new Client();
+
+        }
+
+        [HttpPost("Register")]
+        public async Task<Client> Register(RegisterPost register)
+        {
+            return new Client();
+        }
 
 
-        //}
+
     }
 }
