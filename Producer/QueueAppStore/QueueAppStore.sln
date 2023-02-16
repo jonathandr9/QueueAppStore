@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueAppStore.RabbitMQAdapt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueAppStore.UnitTests", "..\QueueAppStore.UnitTests\QueueAppStore.UnitTests.csproj", "{14EF2701-EFD6-4511-BAC5-CF3271B49651}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueAppStore.CacheAdapter", "..\QueueAppStore.CacheAdapter\QueueAppStore.CacheAdapter.csproj", "{2A380C48-55A2-4B79-886D-3251956CE00D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{14EF2701-EFD6-4511-BAC5-CF3271B49651}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14EF2701-EFD6-4511-BAC5-CF3271B49651}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14EF2701-EFD6-4511-BAC5-CF3271B49651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A380C48-55A2-4B79-886D-3251956CE00D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A380C48-55A2-4B79-886D-3251956CE00D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A380C48-55A2-4B79-886D-3251956CE00D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A380C48-55A2-4B79-886D-3251956CE00D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{E5EF7887-B35F-4FF3-89C6-E14429BFA1CD} = {58B0B527-6011-4F7B-B402-8B82E6C69CD5}
 		{D43BCC04-558A-4D71-BD6A-103FD03ABC0D} = {58B0B527-6011-4F7B-B402-8B82E6C69CD5}
 		{14EF2701-EFD6-4511-BAC5-CF3271B49651} = {42C2647B-D9ED-41A6-B439-47BBCAD4055C}
+		{2A380C48-55A2-4B79-886D-3251956CE00D} = {58B0B527-6011-4F7B-B402-8B82E6C69CD5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A1A2166D-0FE5-4904-BDB6-D7961DD5A87B}

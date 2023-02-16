@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QueueAppStore.Application\QueueAppStore.Application.csproj" />
+    <ProjectReference Include="..\QueueAppStore.CacheAdapter\QueueAppStore.CacheAdapter.csproj" />
     <ProjectReference Include="..\QueueAppStore.Domain\QueueAppStore.Domain.csproj" />
     <ProjectReference Include="..\QueueAppStore.RabbitMQAdapter\QueueAppStore.RabbitMQAdapter.csproj" />
     <ProjectReference Include="..\QueueAppStore.SqlServerAdapter\QueueAppStore.SqlAdapter.csproj" />

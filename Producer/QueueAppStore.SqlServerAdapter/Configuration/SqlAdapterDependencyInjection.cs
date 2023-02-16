@@ -1,4 +1,5 @@
 ﻿using QueueAppStore.Domain.Adapters;
+using QueueAppStore.SqlAdapter;
 using QueueAppStore.SqlAdapter.Configuration;
 using QueueAppStore.SqlServerAdapter;
 
@@ -21,6 +22,10 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<
                 IClientRepository,
                 ClientRepository>();
+
+            services.AddScoped<
+                IAppRepository,
+                AppRepository>();
 
             services.AddSingleton(configuration);
 

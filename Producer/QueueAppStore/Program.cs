@@ -1,4 +1,5 @@
 using QueueAppStore.Application;
+using QueueAppStore.CacheAdapter.Configuration;
 using QueueAppStore.Domain.Adapters;
 using QueueAppStore.Domain.Services;
 using QueueAppStore.RabbitMQAdapter;
@@ -14,10 +15,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IAppService, AppService>();
 builder.Services.AddScoped<IQueueAdapter, QueueAdapter>();
-builder.Services.AddScoped<IAppRepository, AppRepository>();
 builder.Services.AddSqlAdapter(
                 builder.Configuration.GetSection("SqlAdapterConfiguration")
                 .Get<SqlAdapterConfiguration>());
+builder.Services.AddCacheAdapter(
+                builder.Configuration.GetSection("CacheAdapterConfiguration")
+                .Get<CacheAdapterConfiguration>());
 
 var app = builder.Build();
 

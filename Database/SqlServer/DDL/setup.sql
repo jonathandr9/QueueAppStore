@@ -1,0 +1,3 @@
+CREATE DATABASE AppStore;
+GO
+USE AppStore;
