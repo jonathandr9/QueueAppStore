@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using QueueAppStore.Domain.Services;
 
 namespace QueueAppStore.Controllers
 {
@@ -7,17 +8,21 @@ namespace QueueAppStore.Controllers
     public class AppsController : Controller
     {
         private readonly ILogger<PaymentController> _logger;
+        private readonly IAppService _appService;
 
-        public AppsController(ILogger<PaymentController> logger)
+        public AppsController(ILogger<PaymentController> logger,
+            IAppService appService)
         {
             _logger = logger;
+            _appService = appService;
         }
 
-        //[HttpPost(Name = "PaymentWithCard")]
-        //public async Task PaymentWithCard(Card cardData)
-        //{
+        [HttpGet(Name = "GetList")]
+        public async Task<JsonResult> GetList()
+        {
+            var appsList = await _appService.GetAppsList();
 
-
-        //}
+            return Json(appsList);
+        }
     }
 }

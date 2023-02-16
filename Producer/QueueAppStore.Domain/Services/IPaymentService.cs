@@ -2,5 +2,6 @@
 {
     public interface IPaymentService
     {
+        Task PaymentWithCard();
     }
 }

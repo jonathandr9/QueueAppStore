@@ -2,8 +2,8 @@
 
 namespace QueueAppStore.Domain.Adapters
 {
-    public interface IClientRepository
+    public interface IAppRepository
     {
-        Task<Client> GetClient();
+        Task<IEnumerable<App>> GetAll();
     }
 }
