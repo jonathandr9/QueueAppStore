@@ -20,13 +20,13 @@ namespace QueueAppStore.SqlAdapter
                 throw new ArgumentNullException(nameof(context));
 
         public async Task<int> AddOrder(Order order)
-        {           
-            using (var trxScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-            {
-                try
-                {
+        {
+            //using (var trxScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            //{
+            //try
+            //{
 
-                    var id = await _context.Connection.QuerySingleAsync<int>(
+                var id = await _context.Connection.QuerySingleAsync<int>(
                         @"INSERT INTO [OrderSale] 
                             (IdClient,
                              IdApp,
@@ -45,16 +45,16 @@ namespace QueueAppStore.SqlAdapter
                         order,
                         commandType: CommandType.Text);
 
-                    
-                    trxScope.Complete();
 
-                    return id;
-                }
-                catch (Exception ex)
-                {
-                    throw new InvalidOperationException($"Erro ao inserir Pedido: '{ex.Message}'");
-                }
-            };
+            //        trxScope.Complete();
+
+            return id;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        throw new InvalidOperationException($"Erro ao inserir Pedido: '{ex.Message}'");
+            //    }
+            //};
         }
     }
 }

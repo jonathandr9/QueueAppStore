@@ -2,6 +2,7 @@
 using QueueAppStore.Domain.Enums;
 using QueueAppStore.Domain.Models;
 using QueueAppStore.Domain.Services;
+using System.Transactions;
 
 namespace QueueAppStore.Application
 {
@@ -19,21 +20,36 @@ namespace QueueAppStore.Application
 
         public async Task<int> AddNew(Order order)
         {
-            order.PaymentStatus = (int)PaymentStatusEnum.Pending;
-
-            var idOfOrder = await _orderRepository.AddOrder(order);
-
-            var payment = new Payment()
+            using (var trxScope = new TransactionScope(
+                TransactionScopeAsyncFlowOption.Enabled))
             {
-                OrderId = idOfOrder,
-                Card = order.Card,
-                Amounts = order.Amounts,
-                Value = order.Value
+                try
+                {
+                    order.PaymentStatus = (int)PaymentStatusEnum.Pending;
+
+                    var idOfOrder = await _orderRepository.AddOrder(order);
+
+                    var payment = new Payment()
+                    {
+                        OrderId = idOfOrder,
+                        Card = order.Card,
+                        Amounts = order.Amounts,
+                        Value = order.Value
+                    };
+
+                    await _queueAdapter.AddPaymentMessage(payment);
+
+                    trxScope.Complete();
+
+                    return idOfOrder;
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidOperationException(
+                        $"Erro ao inserir Pedido: '{ex.Message}'");
+                }
             };
-
-            await _queueAdapter.AddPaymentMessage(payment);
-
-            return idOfOrder;
         }
+
     }
 }
