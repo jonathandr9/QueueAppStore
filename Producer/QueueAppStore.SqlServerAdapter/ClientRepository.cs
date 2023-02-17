@@ -17,6 +17,30 @@ namespace QueueAppStore.SqlServerAdapter
             _context = context ??
                 throw new ArgumentNullException(nameof(context));
 
+        public async Task<int> Add(Client client)
+        {
+            var id = await _context.Connection.QuerySingleAsync<int>(
+                    @"INSERT INTO [Client] 
+                            (Name,
+                             Cpf,
+                             Sex,
+                             Address,
+                             DateOfBirth,
+                             IdentityId) 
+                          OUTPUT INSERTED.Id
+                          VALUES 
+                             (@Name,
+                              @Cpf,
+                              @Sex,
+                              @Address,
+                              @DateOfBirth,
+                              @IdentityId)",
+                    client,
+                    commandType: CommandType.Text);
+
+            return id;
+        }
+
         public async Task<Client> GetClient()
         {
             return await _context.Connection.QueryFirstOrDefaultAsync<Client>(

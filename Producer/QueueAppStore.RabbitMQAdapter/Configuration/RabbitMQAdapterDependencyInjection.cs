@@ -7,7 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class RabbitMQAdapterDependencyInjection
     {
-        public static void AddRabbitMQAdapter(
+        public static IServiceCollection AddRabbitMQAdapter(
             this IServiceCollection services,
             RabbitMQAdapterConfiguration configuration)
         {
@@ -26,6 +26,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<RabbitMQAdapterConfiguration>(configuration);
             services.AddSingleton<IConnectionFactory>(factory);
             services.AddScoped<IQueueAdapter, QueueAdapter>();
+
+            return services;
         }
     }
 }

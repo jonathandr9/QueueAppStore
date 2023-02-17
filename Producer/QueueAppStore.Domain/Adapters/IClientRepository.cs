@@ -5,5 +5,6 @@ namespace QueueAppStore.Domain.Adapters
     public interface IClientRepository
     {
         Task<Client> GetClient();
+        Task<int> Add(Client client);
     }
 }

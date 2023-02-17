@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using QueueAppStore.API.Models;
 using QueueAppStore.Domain.Models;
+using QueueAppStore.Domain.Services;
 
 namespace QueueAppStore.Controllers
 {
@@ -10,23 +12,40 @@ namespace QueueAppStore.Controllers
     public class ClientController : Controller
     {
         private readonly ILogger<OrderController> _logger;
+        private readonly IClientService _clientService;
+        private readonly IMapper _mapper;
 
-        public ClientController(ILogger<OrderController> logger)
+
+        public ClientController(
+            ILogger<OrderController> logger,
+            IClientService clientService,
+            IMapper mapper)
         {
             _logger = logger;
+            _clientService = clientService;
+            _mapper = mapper;
         }
 
         [HttpPost("Login")]
-        public async Task<Client> Login(LoginPost login)
+        public async Task<JsonResult> Login(LoginPost login)
         {
-            return new Client();
+            var user = _mapper.Map<User>(login);
+
+            var token = await _clientService.Login(user);
+
+            return new JsonResult(new { token });
 
         }
 
         [HttpPost("Register")]
-        public async Task<Client> Register(RegisterPost register)
+        public async Task<JsonResult> Register(RegisterPost register)
         {
-            return new Client();
+            var client = _mapper.Map<Client>(register);
+            var user = _mapper.Map<User>(register);
+
+            var result = await _clientService.Register(client, user);
+
+            return new JsonResult(result);
         }
 
 
