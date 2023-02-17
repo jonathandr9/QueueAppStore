@@ -1,4 +1,6 @@
-﻿using ConsumerAppStore.Application.Models;
+﻿using ConsumerAppStore.Application.Interfaces;
+using ConsumerAppStore.Application.Models;
+using ConsumerAppStore.Application.Utils;
 using Microsoft.Extensions.Logging;
 
 namespace ConsumerAppStore.Application.Subscribers
@@ -8,9 +10,13 @@ namespace ConsumerAppStore.Application.Subscribers
         private IDisposable unsubscriber;
         private string instName;
         private readonly ILogger<SaveCard> _logger;
-        public SaveCard(ILogger<SaveCard> logger)
+        private readonly ICardRepository _cardRepository;
+
+        public SaveCard(ILogger<SaveCard> logger,
+            ICardRepository cardRepository)
         {
             _logger = logger;
+            _cardRepository = cardRepository;
         }
 
         public string Name
@@ -24,20 +30,45 @@ namespace ConsumerAppStore.Application.Subscribers
 
         public virtual void OnCompleted()
         {
-            //_logger.LogInformation("The Location Tracker has completed transmitting data to {0}.", this.Name);
-            this.Unsubscribe();
+
+            _logger.LogInformation("Fim processamento para validar e salvar cartão");
         }
 
         public virtual void OnError(Exception e)
         {
             _logger.LogInformation(e.ToString());
-            //_logger.LogInformation("{0}: The location cannot be determined.", this.Name);
         }
 
         public virtual void OnNext(Payment value)
         {
-            _logger.LogInformation("Salvando cartão");
-            //_logger.LogInformation("{2}: The current location is {0}, {1}", value.Latitude, value.Longitude, this.Name);
+
+            _logger.LogInformation("Iniciando processamento para validar e salvar cartão");
+
+            try
+            {
+                var card = value.Card;
+
+                var isValid = ValidCard.IsCreditCardInfoValid(
+                    card.Number.ToString(),
+                    card.ValidThru.ToString("MM/yyyy"),
+                    card.CVC.ToString());
+
+                if (isValid)
+                    _cardRepository.Add(card);
+                else
+                    _logger.LogWarning("Cartão Inválido");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Erro ao processar validação e salvamento do cartão");
+
+                throw;
+            }
+            finally
+            {
+                this.Unsubscribe();
+            }
         }
 
         public virtual void Unsubscribe()

@@ -58,7 +58,7 @@ namespace ConsumerAppStore
                                      autoAck: false,
                                      consumer: consumer);
 
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                _logger.LogInformation("Worker em execução: {time}", DateTimeOffset.Now);
                 await Task.Delay(10000, stoppingToken);
             }
 

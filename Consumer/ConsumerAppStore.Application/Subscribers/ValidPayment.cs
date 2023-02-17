@@ -1,4 +1,6 @@
-﻿using ConsumerAppStore.Application.Models;
+﻿using ConsumerAppStore.Application.Interfaces;
+using ConsumerAppStore.Application.Models;
+using ConsumerAppStore.Application.Utils;
 using Microsoft.Extensions.Logging;
 
 namespace ConsumerAppStore.Application.Subscribers
@@ -8,10 +10,13 @@ namespace ConsumerAppStore.Application.Subscribers
         private IDisposable unsubscriber;
         private string instName;
         private readonly ILogger<ValidPayment> _logger;
+        private readonly IOrderRepository _orderRepository;
 
-        public ValidPayment(ILogger<ValidPayment> logger)
+        public ValidPayment(ILogger<ValidPayment> logger,
+            IOrderRepository orderRepository)
         {
             _logger = logger;
+            _orderRepository = orderRepository;
         }
 
         public string Name
@@ -36,8 +41,33 @@ namespace ConsumerAppStore.Application.Subscribers
 
         public virtual void OnNext(Payment value)
         {
-            _logger.LogInformation("Validando pagamento");
-            //_logger.LogInformation("{2}: The current location is {0}, {1}", value.Latitude, value.Longitude, this.Name);
+            _logger.LogInformation("Iniciando processamento para validar e salvar cartão");
+
+            try
+            {
+                var card = value.Card;
+
+                var isValid = ValidCard.IsCreditCardInfoValid(
+                    card.Number.ToString(),
+                    card.ValidThru.ToString("MM/yyyy"),
+                    card.CVC.ToString());
+
+                if (isValid)
+                    _orderRepository.UpdateStatus(EnumOrderStatus.Approved);
+                else
+                    _orderRepository.UpdateStatus(EnumOrderStatus.Disapproved);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Erro ao processar validação e salvamento do cartão");
+
+                throw;
+            }
+            finally
+            {
+                this.Unsubscribe();
+            }
         }
 
         public virtual void Unsubscribe()
