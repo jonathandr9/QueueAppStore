@@ -73,7 +73,8 @@ namespace ConsumerAppStore.Application.Subscribers
 
         public virtual void Unsubscribe()
         {
-            unsubscriber.Dispose();
+            if (unsubscriber != null)           
+                unsubscriber.Dispose();
         }
     }
 }

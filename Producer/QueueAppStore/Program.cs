@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using QueueAppStore.API;
 using QueueAppStore.Application;
 using QueueAppStore.CacheAdapter.Configuration;

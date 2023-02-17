@@ -4,6 +4,6 @@ namespace ConsumerAppStore.Application.Interfaces
 {
     public interface ICardRepository
     {
-        Task Add(Card card);
+        void Add(Card card);
     }
 }

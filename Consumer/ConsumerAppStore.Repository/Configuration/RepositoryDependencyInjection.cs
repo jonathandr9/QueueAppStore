@@ -18,19 +18,19 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(
                     nameof(configuration.SqlConnectionString));
 
-            services.AddScoped<
+            services.AddSingleton<
                 ICardRepository,
                 CardRepository>();
 
-            services.AddScoped<
+            services.AddSingleton<
                 IOrderRepository,
                 OrderRepository>();
 
-            services.AddScoped
+            services.AddSingleton
                 (d => new SqlContext
                 (configuration.SqlConnectionString));
 
-            services.AddScoped
+            services.AddSingleton
                 (d => new SqlContext
                 (configuration.SqlConnectionString));
 

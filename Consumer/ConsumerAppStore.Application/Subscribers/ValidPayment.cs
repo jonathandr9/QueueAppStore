@@ -53,9 +53,9 @@ namespace ConsumerAppStore.Application.Subscribers
                     card.CVC.ToString());
 
                 if (isValid)
-                    _orderRepository.UpdateStatus(EnumOrderStatus.Approved);
+                    _orderRepository.UpdateStatus(EnumOrderStatus.Approved, value.OrderId);
                 else
-                    _orderRepository.UpdateStatus(EnumOrderStatus.Disapproved);
+                    _orderRepository.UpdateStatus(EnumOrderStatus.Disapproved, value.OrderId);
 
             }
             catch (Exception ex)
@@ -72,7 +72,8 @@ namespace ConsumerAppStore.Application.Subscribers
 
         public virtual void Unsubscribe()
         {
-            unsubscriber.Dispose();
+            if (unsubscriber != null)
+                unsubscriber.Dispose();
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class Card
     {
-        public int Number { get; set; }
+        public string Number { get; set; }
         public string Name { get; set; }
         public DateTime ValidThru { get; set; }
         public int CVC { get; set; }
@@ -14,5 +14,6 @@
         public Card Card { get; set; }
         public int Amounts { get; set; }
         public double Value { get; set; }
+        public int ClientId { get; set; }
     }
 }

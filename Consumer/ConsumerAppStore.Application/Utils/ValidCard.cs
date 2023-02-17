@@ -6,13 +6,13 @@ namespace ConsumerAppStore.Application.Utils
     {
         public static bool IsCreditCardInfoValid(string cardNo, string expiryDate, string cvv)
         {
-            var cardCheck = new Regex(@"^(1298|1267|4512|4567|8901|8933)([\-\s]?[0-9]{4}){3}$");
+            //var cardCheck = new Regex(@"^(1298|1267|4512|4567|8901|8933)([\-\s]?[0-9]{4}){3}$");
             var monthCheck = new Regex(@"^(0[1-9]|1[0-2])$");
             var yearCheck = new Regex(@"^20[0-9]{2}$");
             var cvvCheck = new Regex(@"^\d{3}$");
 
-            if (!cardCheck.IsMatch(cardNo))
-                return false;
+            //if (!cardCheck.IsMatch(cardNo))
+            //    return false;
             if (!cvvCheck.IsMatch(cvv))
                 return false;
 

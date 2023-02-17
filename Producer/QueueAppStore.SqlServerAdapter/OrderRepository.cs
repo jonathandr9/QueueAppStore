@@ -3,7 +3,6 @@ using QueueAppStore.Domain.Adapters;
 using QueueAppStore.Domain.Models;
 using QueueAppStore.SqlAdapter.Configuration;
 using System.Data;
-using System.Transactions;
 
 namespace QueueAppStore.SqlAdapter
 {

@@ -26,7 +26,7 @@ namespace ConsumerAppStore.Repository
                 try
                 {
                     var id = _context.Connection.QuerySingle<int>(
-                     @"INSERT INTO [OrderSale] 
+                     @"INSERT INTO [Card] 
                             (Number,
                              NameIn,
                              ValidThru,
@@ -40,6 +40,7 @@ namespace ConsumerAppStore.Repository
                      card,
                      commandType: CommandType.Text);
 
+                    trxScope.Complete();
                 }
                 catch (Exception ex)
                 {

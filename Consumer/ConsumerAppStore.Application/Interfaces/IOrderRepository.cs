@@ -4,6 +4,8 @@ namespace ConsumerAppStore.Application.Interfaces
 {
     public interface IOrderRepository
     {
-        void UpdateStatus(EnumOrderStatus enumOrderStatus);
+        void UpdateStatus(
+            EnumOrderStatus enumOrderStatus,
+            int orderId);
     }
 }

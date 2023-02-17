@@ -27,7 +27,7 @@ namespace ConsumerAppStore.Repository
             {
                 try
                 {
-                    _context.Connection.QuerySingle<int>(
+                    _context.Connection.Execute(
                         @"UPDATE OrderSale
                             set PaymentStatus = @status
                          WHERE Id = @id",
@@ -37,6 +37,8 @@ namespace ConsumerAppStore.Repository
                             status = (int)enumOrderStatus
                         },
                         commandType: CommandType.Text);
+
+                    trxScope.Complete();
                 }
                 catch (Exception ex)
                 {
