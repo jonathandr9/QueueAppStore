@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using QueueAppStore.API.Models;
 using QueueAppStore.Domain.Services;
 
 namespace QueueAppStore.Controllers
@@ -19,10 +20,23 @@ namespace QueueAppStore.Controllers
 
         [HttpGet(Name = "GetList")]
         public async Task<JsonResult> GetList()
-        {
-            var appsList = await _appService.GetAppsList();
+        {            
+            try
+            {
+                var appsList = await _appService.GetAppsList();
 
-            return Json(appsList);
+                return Json(appsList);
+
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(new ErrorModel
+                {
+                    Id = 1,
+                    Description = ex.Message
+                });
+            }
         }
     }
 }

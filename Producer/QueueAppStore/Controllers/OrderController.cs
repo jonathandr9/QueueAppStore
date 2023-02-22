@@ -24,11 +24,25 @@ namespace QueueAppStore.Controllers
         }
 
         [HttpPost(Name = "PaymentWithCard")]
-        public async Task PaymentWithCard(OrderPost orderPost)
+        public async Task<JsonResult> PaymentWithCard(OrderPost orderPost)
         {
-            var order = _mapper.Map<Order>(orderPost);
+            try
+            {
+                var order = _mapper.Map<Order>(orderPost);
 
-            await _orderService.AddNew(order);  
+                await _orderService.AddNew(order);
+
+                return new JsonResult(new { });
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(new ErrorModel
+                {
+                    Id = 1,
+                    Description = ex.Message
+                });
+            }
         }
 
         
@@ -36,9 +50,21 @@ namespace QueueAppStore.Controllers
         public async Task<JsonResult> PaymentWithCard(int idOrder)
         {
 
-            var order = await _orderService.GetOrder(idOrder);
+            try
+            {
+                var order = await _orderService.GetOrder(idOrder);
 
-            return new JsonResult(order);
+                return new JsonResult(order);
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(new ErrorModel
+                {
+                    Id = 1,
+                    Description = ex.Message
+                });
+            }
         }
 
 

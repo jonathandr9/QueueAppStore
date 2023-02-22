@@ -29,26 +29,48 @@ namespace QueueAppStore.Controllers
         [HttpPost("Login")]
         public async Task<JsonResult> Login(LoginPost login)
         {
-            var user = _mapper.Map<User>(login);
+            try
+            {
+                var user = _mapper.Map<User>(login);
 
-            var token = await _clientService.Login(user);
+                var token = await _clientService.Login(user);
 
-            return new JsonResult(new { token });
+                return new JsonResult(new { token });
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(new ErrorModel
+                {
+                    Id = 1,
+                    Description = ex.Message
+                });
+            }
+            
 
         }
 
         [HttpPost("Register")]
         public async Task<JsonResult> Register(RegisterPost register)
         {
-            var client = _mapper.Map<Client>(register);
-            var user = _mapper.Map<User>(register);
+            try
+            {
+                var client = _mapper.Map<Client>(register);
+                var user = _mapper.Map<User>(register);
 
-            var result = await _clientService.Register(client, user);
+                var result = await _clientService.Register(client, user);
 
-            return new JsonResult(result);
+                return new JsonResult(result);
+            }
+            catch (Exception ex)
+            {
+
+                return new JsonResult(new ErrorModel
+                {
+                    Id = 1,
+                    Description = ex.Message
+                });
+            }           
         }
-
-
-
     }
 }
