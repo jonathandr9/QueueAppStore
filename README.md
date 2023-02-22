@@ -3,6 +3,16 @@
 
 Projeto de loja de APPs com processamento de pagamentos por cartão em fila (RabbitMQ)   
 
+Este repositório se trata de uma API construída em .Net 6.0 seguindo o padrão de arquitetura Clean Archtecture. Tendo como material de referência o artigo da Microsoft 
+[Arquiteturas comuns de aplicativo Web], que se trata de um trecho do livro [ASP.NET Core architecture e-book]  
+    
+O padrão de arquitetura pode ser melhor compreendido através da representação horizontal:    
+
+![217387901-5f802da7-c24c-4b6e-99e8-1cfbfe8bf344](https://user-images.githubusercontent.com/27286681/220660714-7cbb7b09-b530-4149-9629-3a5354281ac4.png)
+
+
+O worker que lê da fila de pagamentos segue o mesmo padrão de arquitetura porém com menos camadas, devido o contexto menor.
+
 ## 1. Intruções para preparo do ambiente de execução:  
 
 
@@ -44,3 +54,8 @@ API: ``` ...\Producer\QueueAppStore\QueueAppStore.sln ```
 Worker: ``` ...\Consumer\ConsumerAppStore\ConsumerAppStore.sln ```
 
 
+
+
+
+[ASP.NET Core architecture e-book]: https://dotnet.microsoft.com/en-us/download/e-book/aspnet/pdf
+[Arquiteturas comuns de aplicativo Web]: https://docs.microsoft.com/pt-br/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures
