@@ -11,14 +11,17 @@ namespace QueueAppStore.Application
         private readonly IQueueAdapter _queueAdapter;
         private readonly IOrderRepository _orderRepository;
         private readonly IAppRepository _appRepository;
+        private readonly IClientRepository _clientRepository;
 
         public OrderService(IQueueAdapter queueAdapter,
             IOrderRepository orderRepository,
-            IAppRepository appRepository)
+            IAppRepository appRepository,
+            IClientRepository clientRepository)
         {
             _queueAdapter = queueAdapter;
             _orderRepository = orderRepository;
             _appRepository = appRepository;
+            _clientRepository = clientRepository;
         }
 
         public async Task<int> AddNew(Order order)
@@ -28,6 +31,10 @@ namespace QueueAppStore.Application
             {
                 try
                 {
+                    if (await _clientRepository.Exists(order.IdClient) == false)
+                        throw new ArgumentException("Client não existe!");
+
+
                     var app = await _appRepository.GetApp(order.IdApp);
 
                     order.PaymentStatus = (int)PaymentStatusEnum.Pending;

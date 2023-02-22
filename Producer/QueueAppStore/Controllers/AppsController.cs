@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QueueAppStore.API.Models;
+using QueueAppStore.Domain.Models;
 using QueueAppStore.Domain.Services;
 
 namespace QueueAppStore.Controllers
@@ -19,23 +20,35 @@ namespace QueueAppStore.Controllers
         }
 
         [HttpGet(Name = "GetList")]
-        public async Task<JsonResult> GetList()
+        [ProducesResponseType(typeof(ErrorModel), 400)]
+        [ProducesResponseType(typeof(ErrorModel), 500)]
+        [ProducesResponseType(typeof(IEnumerable<App>), 200)]
+        public async Task<IActionResult> GetList()
         {            
             try
             {
                 var appsList = await _appService.GetAppsList();
 
-                return Json(appsList);
+                return Ok(appsList);
 
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new ErrorModel()
+                {
+                    Code = 1,
+                    Description = ex.Message
+                });
             }
             catch (Exception ex)
             {
-
-                return new JsonResult(new ErrorModel
-                {
-                    Id = 1,
-                    Description = ex.Message
-                });
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    new ErrorModel()
+                    {
+                        Code = 500,
+                        Description = ex.Message
+                    });
             }
         }
     }

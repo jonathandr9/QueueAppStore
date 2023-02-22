@@ -24,7 +24,10 @@ namespace QueueAppStore.Controllers
         }
 
         [HttpPost(Name = "PaymentWithCard")]
-        public async Task<JsonResult> PaymentWithCard(OrderPost orderPost)
+        [ProducesResponseType(typeof(ErrorModel), 400)]
+        [ProducesResponseType(typeof(ErrorModel), 500)]
+        [ProducesResponseType(200)]
+        public async Task<IActionResult> PaymentWithCard(OrderPost orderPost)
         {
             try
             {
@@ -32,38 +35,59 @@ namespace QueueAppStore.Controllers
 
                 await _orderService.AddNew(order);
 
-                return new JsonResult(new { });
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new ErrorModel()
+                {
+                    Code = 1,
+                    Description = ex.Message
+                });
             }
             catch (Exception ex)
             {
-
-                return new JsonResult(new ErrorModel
-                {
-                    Id = 1,
-                    Description = ex.Message
-                });
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    new ErrorModel()
+                    {
+                        Code = 500,
+                        Description = ex.Message
+                    });
             }
         }
 
         
         [HttpGet(Name = "GetOrder")]
-        public async Task<JsonResult> PaymentWithCard(int idOrder)
+        [ProducesResponseType(typeof(ErrorModel), 400)]
+        [ProducesResponseType(typeof(ErrorModel), 500)]
+        [ProducesResponseType(typeof(Order), 200)]
+        public async Task<IActionResult> GetOrder(int idOrder)
         {
 
             try
             {
                 var order = await _orderService.GetOrder(idOrder);
 
-                return new JsonResult(order);
+                return Ok(_mapper.Map<OrderGet>(order));
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new ErrorModel()
+                {
+                    Code = 1,
+                    Description = ex.Message
+                });
             }
             catch (Exception ex)
             {
-
-                return new JsonResult(new ErrorModel
-                {
-                    Id = 1,
-                    Description = ex.Message
-                });
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    new ErrorModel()
+                    {
+                        Code = 500,
+                        Description = ex.Message
+                    });
             }
         }
 

@@ -27,7 +27,10 @@ namespace QueueAppStore.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<JsonResult> Login(LoginPost login)
+        [ProducesResponseType(typeof(ErrorModel), 400)]
+        [ProducesResponseType(typeof(ErrorModel), 500)]
+        [ProducesResponseType(typeof(string), 200)]
+        public async Task<IActionResult> Login(LoginPost login)
         {
             try
             {
@@ -35,23 +38,33 @@ namespace QueueAppStore.Controllers
 
                 var token = await _clientService.Login(user);
 
-                return new JsonResult(new { token });
+                return Ok(new { token });
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-
-                return new JsonResult(new ErrorModel
+                return BadRequest(new ErrorModel()
                 {
-                    Id = 1,
+                    Code = 1,
                     Description = ex.Message
                 });
             }
-            
-
+            catch (Exception ex)
+            {
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    new ErrorModel()
+                    {
+                        Code = 500,
+                        Description = ex.Message
+                    });
+            }
         }
 
         [HttpPost("Register")]
-        public async Task<JsonResult> Register(RegisterPost register)
+        [ProducesResponseType(typeof(ErrorModel), 400)]
+        [ProducesResponseType(typeof(ErrorModel), 500)]
+        [ProducesResponseType(typeof(int), 200)]
+        public async Task<IActionResult> Register(RegisterPost register)
         {
             try
             {
@@ -62,15 +75,24 @@ namespace QueueAppStore.Controllers
 
                 return new JsonResult(result);
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-
-                return new JsonResult(new ErrorModel
+                return BadRequest(new ErrorModel()
                 {
-                    Id = 1,
+                    Code = 1,
                     Description = ex.Message
                 });
-            }           
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    new ErrorModel()
+                    {
+                        Code = 500,
+                        Description = ex.Message
+                    });
+            }
         }
     }
 }

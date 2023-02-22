@@ -6,5 +6,6 @@ namespace QueueAppStore.Domain.Adapters
     {
         Task<Client> GetClient();
         Task<int> Add(Client client);
+        Task<bool> Exists(int idClient);
     }
 }

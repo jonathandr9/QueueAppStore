@@ -41,6 +41,16 @@ namespace QueueAppStore.SqlServerAdapter
             return id;
         }
 
+        public async Task<bool> Exists(int idClient)
+        {
+            return await _context.Connection.ExecuteScalarAsync<bool>(
+                @"SELECT COUNT(1) 
+                  FROM Client WITH(nolock)
+                  WHERE ID=@idClient",
+                new { idClient },
+                commandType: CommandType.Text);
+        }
+
         public async Task<Client> GetClient()
         {
             return await _context.Connection.QueryFirstOrDefaultAsync<Client>(
