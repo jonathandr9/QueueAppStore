@@ -13,6 +13,16 @@ namespace QueueAppStore.API
 
             CreateMap<RegisterPost, Client>();
             CreateMap<RegisterPost, User>();
+            CreateMap<OrderPost, Order>();
+            CreateMap<CardOrderPost, Card>()
+                .ForMember(o => o.ValidThru, d => d.MapFrom(src => getValidThru(src.ValidThru)));
+        }
+
+        private DateTime getValidThru(string value)
+        {
+            return new DateTime(Convert.ToInt32(value.Split('/')[1]),
+                Convert.ToInt32(value.Split('/')[0]),
+                01);
         }
     }
 }
