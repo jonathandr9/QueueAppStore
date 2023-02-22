@@ -22,9 +22,24 @@ namespace QueueAppStore.SqlAdapter
             return await _context.Connection.QueryAsync<App>(
                         @"SELECT Id,
                                  Name, 
-                                 Category                                 
+                                 Category,
+                                 Price
                           FROM Apps WITH (NOLOCK)",
                         commandType: CommandType.Text);
         }
+
+        public async Task<App> GetApp(int appId)
+        {
+            return await _context.Connection.QueryFirstAsync<App>(
+                        @"SELECT Id,
+                                 Name, 
+                                 Category,
+                                 Price
+                          FROM Apps WITH (NOLOCK)
+                          WHERE ID = @appId",
+                        new { appId },
+                        commandType: CommandType.Text);
+        }
+
     }
 }

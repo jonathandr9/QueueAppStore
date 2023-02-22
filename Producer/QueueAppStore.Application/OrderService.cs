@@ -10,12 +10,15 @@ namespace QueueAppStore.Application
     {
         private readonly IQueueAdapter _queueAdapter;
         private readonly IOrderRepository _orderRepository;
+        private readonly IAppRepository _appRepository;
 
         public OrderService(IQueueAdapter queueAdapter,
-            IOrderRepository orderRepository)
+            IOrderRepository orderRepository,
+            IAppRepository appRepository)
         {
             _queueAdapter = queueAdapter;
             _orderRepository = orderRepository;
+            _appRepository = appRepository;
         }
 
         public async Task<int> AddNew(Order order)
@@ -25,7 +28,10 @@ namespace QueueAppStore.Application
             {
                 try
                 {
+                    var app = await _appRepository.GetApp(order.IdApp);
+
                     order.PaymentStatus = (int)PaymentStatusEnum.Pending;
+                    order.Value = app.Price;
 
                     var idOfOrder = await _orderRepository.AddOrder(order);
 
@@ -34,7 +40,7 @@ namespace QueueAppStore.Application
                         OrderId = idOfOrder,
                         Card = order.Card,
                         Amounts = order.Amounts,
-                        Value = order.Value
+                        Value = app.Price
                     };
 
                     await _queueAdapter.AddPaymentMessage(payment);
