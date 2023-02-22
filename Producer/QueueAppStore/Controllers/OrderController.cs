@@ -20,6 +20,7 @@ namespace QueueAppStore.Controllers
         {
             _logger = logger;
             _orderService = orderService;
+            _mapper = mapper;
         }
 
         [HttpPost(Name = "PaymentWithCard")]

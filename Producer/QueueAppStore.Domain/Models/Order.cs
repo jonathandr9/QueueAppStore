@@ -7,12 +7,12 @@
         public int IdApp { get; set; }
         public int PaymentStatus { get; set; }
         public int Amounts { get; set; }
-        public decimal Value { get; set; }
+        public decimal? Value { get; set; }
         public int LastCardDigits { get; set; }
 
 
-        public Card Card { get; set; }
-        public Client Client { get; set; }
-        public App App { get; set; }
+        public Card? Card { get; set; }
+        public Client? Client { get; set; }
+        public App? App { get; set; }
     }
 }
