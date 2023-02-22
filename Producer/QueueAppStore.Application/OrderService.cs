@@ -57,5 +57,9 @@ namespace QueueAppStore.Application
             };
         }
 
+        public async Task<Order> GetOrder(int idOrder)
+        {
+            return await _orderRepository.GetOrder(idOrder);
+        }
     }
 }

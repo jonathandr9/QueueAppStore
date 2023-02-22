@@ -31,6 +31,18 @@ namespace QueueAppStore.Controllers
             await _orderService.AddNew(order);  
         }
 
+        
+        [HttpGet(Name = "GetOrder")]
+        public async Task<JsonResult> PaymentWithCard(int idOrder)
+        {
+
+            var order = await _orderService.GetOrder(idOrder);
+
+            return new JsonResult(order);
+        }
+
+
+
 
     }
 }

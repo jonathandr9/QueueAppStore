@@ -42,5 +42,21 @@ namespace QueueAppStore.SqlAdapter
 
             return id;
         }
+
+        public async Task<Order> GetOrder(int idOrder)
+        {
+            return await _context.Connection.QueryFirstAsync<Order>(
+                       @"SELECT Id
+                              ,IdClient
+                              ,IdApp
+                              ,PaymentStatus
+                              ,Amounts
+                              ,LastCardDigits
+                              ,Value
+                        FROM OrderSale
+                        WHERE ID = @idOrder",
+                       new { idOrder },
+                       commandType: CommandType.Text);
+        }
     }
 }
